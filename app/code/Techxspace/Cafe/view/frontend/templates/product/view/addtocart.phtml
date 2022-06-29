@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Catalog\Block\Product\View $block*/
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) :?>
+<?php 
+    $allowPurchasePer = "doz";
+?>
+<style>
+div.box-tocart .fieldset .field.qty select.add-item-option{
+    padding-right: 0;
+}
+.field.qty > .control, .input-text.qty{
+    max-width: 6rem;
+}
+</style>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()) :?>
+        <div class="field qty">
+            <?php if(!empty($allowPurchasePer)): ?>
+            <select name="purchase_per" class="add-item-option">
+                <option value="">Qty</option>
+                <option value="<?= $block->escapeHtmlAttr($allowPurchasePer) ?>">Qty (<?= $block->escapeHtml($allowPurchasePer) ?>)</option>
+            </select>
+            <?php else:?>
+            <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+            <?php endif;?>
+
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       min="0"
+                       value="<?= $block->getProductDefaultQty() * 1 ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                       class="input-text qty"
+                       data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button" disabled>
+                <span><?= $block->escapeHtml($buttonTitle) ?></span>
+            </button>
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+<script>
+require(['jquery'], function($){
+    var purchase_per = "<?= $allowPurchasePer ?>";
+
+    // jQuery('form#product_addtocart_form').on('submit', function(){
+    //     // if($(this).hasClass(purchase_per)){
+    //     //     $(this).removeClass(purchase_per);
+    //     // }else{
+    //     //     $(this).addClass(purchase_per);
+    //     // }
+    //     console.log('test');
+    // });
+})
+</script>

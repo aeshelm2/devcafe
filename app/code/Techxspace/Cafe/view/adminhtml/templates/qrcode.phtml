@@ -1,0 +1,33 @@
+<div class="qrcode-container">
+    <h1>QR Code</h1>
+    <div id="qrcode"></div>
+</div>
+<script>
+    require(['jquery', 'qrcode'], function($){
+        setTimeout(function(){
+            var value = $('input[name="table_code"]').val();
+            generateQrCode(value);
+
+            $('input[name="table_code"]').on('blur', function(){
+                var value = $(this).val();
+                generateQrCode(value);
+            })
+
+            function generateQrCode(value)
+            {
+
+                $('#qrcode').html("");
+                value = "<?= $block->getBaseUrl() ?>cafe/dine?table=" + value 
+                var qrcode = new QRCode("qrcode", {
+                    text: value,
+                    width: 128,
+                    height: 128,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                console.log('generate')
+            }
+        },1000);
+    })
+</script>

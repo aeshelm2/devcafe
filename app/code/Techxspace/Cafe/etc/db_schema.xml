@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="cafe_table" resource="cafe_table" engine="innodb" comment="Cafe">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="table_name" nullable="true" length="255" comment="Table Name"/>
+        <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
+        <column xsi:type="varchar" name="table_status" nullable="false" default="vacant" length="255" comment="Table Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CAFE_TABLE_ENTITY_ID_TABLE_CODE">
+            <column name="entity_id"/>
+            <column name="table_code"/>
+        </constraint>
+    </table>
+
+    <table name="cafe_customer" resource="cafe_customer" engine="innodb" comment="Cafe Customer Log">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" identity="false" comment="Customer ID"/>
+        <column xsi:type="varchar" name="check_out_by" nullable="true" length="255" comment="either customer or admin"/>
+        <column xsi:type="varchar" name="status" nullable="false" default="0" length="2" comment="Status"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="true" identity="false" comment="Order ID"/>
+        <column xsi:type="timestamp" name="check_in_time" nullable="false" on_update="false" comment="Check in"/>
+        <column xsi:type="timestamp" name="check_out_time" nullable="true" on_update="true" comment="Check out"/>
+
+        <constraint xsi:type="foreign" referenceId="CAFE_CUSTOMER_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="cafe_customer" column="customer_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="NO ACTION"/>
+
+        <constraint xsi:type="foreign" referenceId="CAFE_CUSTOMER_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="cafe_customer" column="order_id" referenceTable="sales_order"
+                    referenceColumn="entity_id" onDelete="NO ACTION"/>
+                    
+        <constraint xsi:type="unique" referenceId="CAFE_TABLE_ENTITY_ID_TABLE_CODE">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+
+    <table name="cafe_order" resource="cafe_order" engine="innodb" comment="Cafe Orders">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" identity="false" comment="Customer ID"/>
+        <column xsi:type="int" name="quote_id" unsigned="true" nullable="false" comment="Quote ID"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" comment="Sales Order ID"/>
+        <column xsi:type="int" name="seen" nullable="false" default="0" comment=""/>
+        <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
+        <column xsi:type="varchar" name="increment_id" nullable="true" length="32" comment="Increment ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="foreign" referenceId="CAFE_ORDER_ITEM_ID_QUOTE_ENITTY_ID"
+                    table="cafe_order" column="quote_id" referenceTable="quote"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="CAFE_ORDER_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="cafe_order" column="order_id" referenceTable="sales_order"
+                    referenceColumn="entity_id" onDelete="NO ACTION"/>
+
+        <constraint xsi:type="foreign" referenceId="CAFE_ORDER_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="cafe_order" column="customer_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="NO ACTION"/>
+
+        <constraint xsi:type="unique" referenceId="CAFE_ORDER_ENTITY_ID_QUOTE_ID">
+            <column name="entity_id"/>
+            <column name="quote_id"/>
+        </constraint>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="quote_id"/>
+        </constraint>
+    </table>
+    <table name="cafe_order_item" resource="cafe_order_item" engine="innodb" comment="Cafe Order Item">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="item_id" unsigned="true" nullable="false" comment="Item ID"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" comment="Cafe Order ID"/>
+        <column xsi:type="varchar" name="status" nullable="false" default="pending" length="255" comment="Order Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="foreign" referenceId="CAFE_ORDER_ITEM_ORDER_ID_CAFE_ORDER_ENTITY_ID"
+                    table="cafe_order_item" column="order_id" referenceTable="cafe_order"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="CAFE_ORDER_ITEM_ITEM_ID_SALES_ORDER_ITEM_ITEM_ID"
+                    table="cafe_order_item" column="item_id" referenceTable="sales_order_item"
+                    referenceColumn="item_id" onDelete="CASCADE"/>
+                    
+        <constraint xsi:type="unique" referenceId="CAFE_ORDER_ITEM_ENTITY_ID_ITEM_ID">
+            <column name="entity_id"/>
+            <column name="item_id"/>
+        </constraint>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="item_id"/>
+        </constraint>
+    </table>
+
+    <table name="sales_order" resource="sales_order">
+        <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
+    </table>
+
+    <table name="quote" resource="quote">
+        <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
+    </table>
+    
+    <table name="quote_item" resource="checkout">
+        <column xsi:type="varchar" name="status" nullable="false" default="pending" length="255" comment="Order Status"/>
+    </table>
+
+</schema>
