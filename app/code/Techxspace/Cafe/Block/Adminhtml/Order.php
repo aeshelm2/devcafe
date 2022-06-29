@@ -39,7 +39,6 @@ class Order extends \Magento\Framework\View\Element\Template
 		$collection->addFieldToFilter('main_table.parent_item_id', array('null' => true));
         $collection->getSelect()->group("main_table.item_id");
         $collection->getSelect()->order("cafe_order.order_id desc");
-        new \MyLog($collection->getData(), 'orders');
         return $collection;
     }
 

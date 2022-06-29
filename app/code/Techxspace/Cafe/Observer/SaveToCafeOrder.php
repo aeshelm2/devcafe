@@ -83,11 +83,8 @@ class SaveToCafeOrder implements ObserverInterface
                 $orderItemModel = $this->orderItem->create();
                 $orderItemModel->getResource()->getConnection()->insertOnDuplicate('cafe_order_item', $items);
 
-                // $orderItem
-                new \MyLog($items,'addtocart');
             }
         }catch(\Exception $e){
-            new \MyLog($e->getMessage(),'addtocart');
         }
     }
 }

@@ -63,7 +63,6 @@ class CafeOrder extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         );
 
 		$quoteId = $connection->fetchOne($select, $bind);
-		new \MyLog(json_encode($quoteId),'addtocart');
 		if ($quoteId) {
             $this->load($cafeOrder, $quoteId);
         } else {

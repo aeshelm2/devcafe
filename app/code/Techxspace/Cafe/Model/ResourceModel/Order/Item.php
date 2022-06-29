@@ -44,7 +44,6 @@ class Item extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         );
 
 		$itemId = $connection->fetchOne($select, $bind);
-		new \MyLog(json_encode($itemId),'addtocart');
 		if ($itemId) {
             $this->load($cafeOrderItem, $itemId);
         } else {

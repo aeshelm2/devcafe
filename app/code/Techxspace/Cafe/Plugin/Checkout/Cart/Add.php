@@ -1,8 +1,6 @@
 <?php 
 namespace Techxspace\Cafe\Plugin\Checkout\Cart;
 
-use MyLog;
-
 class Add
 {    
     public function __construct(
