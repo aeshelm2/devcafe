@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="cafe_table" resource="cafe_table" engine="innodb" comment="Cafe">
+    <table name="cafe_table" engine="innodb" comment="Cafe">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column xsi:type="varchar" name="table_name" nullable="true" length="255" comment="Table Name"/>
         <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
@@ -17,7 +17,7 @@
         </constraint>
     </table>
 
-    <table name="cafe_customer" resource="cafe_customer" engine="innodb" comment="Cafe Customer Log">
+    <table name="cafe_customer" engine="innodb" comment="Cafe Customer Log">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
         <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" identity="false" comment="Customer ID"/>
@@ -43,7 +43,7 @@
         </constraint>
     </table>
 
-    <table name="cafe_order" resource="cafe_order" engine="innodb" comment="Cafe Orders">
+    <table name="cafe_order" engine="innodb" comment="Cafe Orders">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" identity="false" comment="Customer ID"/>
         <column xsi:type="int" name="quote_id" unsigned="true" nullable="false" comment="Quote ID"/>
@@ -75,7 +75,7 @@
             <column name="quote_id"/>
         </constraint>
     </table>
-    <table name="cafe_order_item" resource="cafe_order_item" engine="innodb" comment="Cafe Order Item">
+    <table name="cafe_order_item" engine="innodb" comment="Cafe Order Item">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column xsi:type="int" name="item_id" unsigned="true" nullable="false" comment="Item ID"/>
         <column xsi:type="int" name="order_id" unsigned="true" nullable="false" comment="Cafe Order ID"/>
@@ -101,11 +101,11 @@
         </constraint>
     </table>
 
-    <table name="sales_order" resource="sales_order">
+    <table name="sales_order">
         <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
     </table>
 
-    <table name="quote" resource="quote">
+    <table name="quote">
         <column xsi:type="varchar" name="table_code" nullable="true" length="255" comment="Table Code"/>
     </table>
     
