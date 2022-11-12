@@ -74,4 +74,5 @@ RUN docker-php-ext-install -j$(nproc) \
     zip \
     pcntl
 
-
+COPY ./conf/000-default.conf /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite
