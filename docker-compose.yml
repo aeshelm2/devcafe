@@ -7,3 +7,12 @@ services:
       - 80:80
     volumes:
       - ./project:/var/www/html
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ecomadmin
+      MYSQL_DATABASE: ecommerce
+
