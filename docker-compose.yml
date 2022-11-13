@@ -7,6 +7,7 @@ services:
       - 80:80
     volumes:
       - ./project:/var/www/html
+      - ./conf/php.ini:/usr/local/etc/php/php.ini
 
   db:
     image: mysql
@@ -30,4 +31,10 @@ services:
       - db
     ports:
       - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
   
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:8025
