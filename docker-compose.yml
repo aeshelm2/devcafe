@@ -2,8 +2,8 @@ version: '2'
 
 services:
   php:
-    user: "${UID}:${GID}"
     build: ./
+    user: "1000:1000"
     container_name: php8
     ports: 
       - 80:80
