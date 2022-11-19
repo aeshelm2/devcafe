@@ -86,4 +86,13 @@ ENV PATH /usr/local/go/bin:$PATH
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN groupadd -g 1000 ecommerce \
+    && useradd -g 1000 -u 1000 -d /var/www -s /bin/bash ecommerce
+
+USER ecommerce:ecommerce
+
 COPY ./conf/php.ini /usr/local/etc/php/
+COPY --chown=ecommerce ./composer.json /var/www/html/
+COPY --chown=ecommerce ./auth.json /var/www/html/

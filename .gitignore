@@ -1,0 +1,5 @@
+/project/*
+!/project/app/
+/project/app/*
+!/project/app/code/
+!/project/app/design/
