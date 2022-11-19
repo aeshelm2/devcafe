@@ -92,6 +92,8 @@ RUN groupadd -g 1000 ecommerce \
     && useradd -g 1000 -u 1000 -d /var/www -s /bin/bash ecommerce
 
 USER ecommerce:ecommerce
+ENV APACHE_RUN_USER ecommerce
+ENV APACHE_RUN_GROUP ecommerce
 
 COPY ./conf/php.ini /usr/local/etc/php/
 COPY --chown=ecommerce ./composer.json /var/www/html/
