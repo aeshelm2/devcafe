@@ -99,7 +99,7 @@ ENV APACHE_RUN_USER ${USER}
 ENV APACHE_RUN_GROUP ${USER}
 
 COPY ./conf/php.ini /usr/local/etc/php/
-COPY --chown=${USER} ./composer.json /var/www/html/
-COPY --chown=${USER} ./auth.json /var/www/html/
+# COPY --chown=${USER} ./composer.json /var/www/html/ecommerce
+# COPY --chown=${USER} ./auth.json /var/www/html/ecommerce
 
 USER ${USER}:${USER}

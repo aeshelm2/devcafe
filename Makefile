@@ -22,3 +22,7 @@ deploy:
 	docker exec -w /var/www/html/ecommerce php8 php bin/magento setup:static-content:deploy -f
 	docker exec -w /var/www/html/ecommerce php8 php bin/magento cache:flush
 
+deploy-frontend:
+	rm -rf project/pub/static/frontend/*
+	docker exec -w /var/www/html/ecommerce php8 php bin/magento setup:static-content:deploy --area frontend -f
+	docker exec -w /var/www/html/ecommerce php8 php bin/magento cache:flush
