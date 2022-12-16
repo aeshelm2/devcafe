@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Techxspace_Cafe::cafe" title="Cafe" module="Techxspace_Cafe" sortOrder="51" resource="Techxspace_Cafe::cafe"/>
-        <add id="Techxspace_Cafe::manage_tables" title="Manage Tables" module="Techxspace_Cafe" sortOrder="10" action="cafe/table/index" resource="Techxspace_Cafe::manage_tables" parent="Techxspace_Cafe::cafe"/>
-        <add id="Techxspace_Cafe::orders" title="Orders" module="Techxspace_Cafe" sortOrder="15" action="cafe/order/index" resource="Techxspace_Cafe::orders" parent="Techxspace_Cafe::cafe"/>
-        <add id="Techxspace_Cafe::hello_configuration" title="Configuration" module="Techxspace_Cafe" sortOrder="99" parent="Techxspace_Cafe::cafe" action="adminhtml/system_config/edit/section/helloworld" resource="Techxspace_Cafe::helloworld_configuration"/>
-    </menu>
-</config>
