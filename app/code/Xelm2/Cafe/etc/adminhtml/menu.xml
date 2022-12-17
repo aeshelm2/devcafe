@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Xelm2_Cafe::cafe" title="Cafe" module="Xelm2_Cafe" sortOrder="51" resource="Xelm2_Cafe::cafe"/>
-        <add id="Xelm2_Cafe::manage_tables" title="Manage Tables" module="Xelm2_Cafe" sortOrder="10" action="cafe/table/index" resource="Xelm2_Cafe::manage_tables" parent="Xelm2_Cafe::cafe"/>
-        <add id="Xelm2_Cafe::orders" title="Orders" module="Xelm2_Cafe" sortOrder="15" action="cafe/order/index" resource="Xelm2_Cafe::orders" parent="Xelm2_Cafe::cafe"/>
-        <add id="Xelm2_Cafe::hello_configuration" title="Configuration" module="Xelm2_Cafe" sortOrder="99" parent="Xelm2_Cafe::cafe" action="adminhtml/system_config/edit/section/helloworld" resource="Xelm2_Cafe::helloworld_configuration"/>
-    </menu>
-</config>

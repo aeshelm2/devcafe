@@ -1,0 +1,24 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="cafe_table_listing_data_source" xsi:type="string">Xclm2\Cafe\Model\ResourceModel\CafeTable\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Xclm2\Cafe\Model\ResourceModel\CafeTable\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cafe_table</argument>
+            <argument name="resourceModel" xsi:type="string">Xclm2\Cafe\Model\ResourceModel\CafeTable</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Customer\Controller\Account\Logout">
+        <plugin name="vacant_table_before_logout" type="Xclm2\Cafe\Plugin\Customer\Account\Logout" sortOrder="1" disabled="false"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="cart_add_check_if_table_vacant" type="Xclm2\Cafe\Plugin\Checkout\Cart\Add" sortOrder="1" disabled="false"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Index\Index">
+        <plugin name="checkout_index_check_if_table_vacant" type="Xclm2\Cafe\Plugin\Checkout\Index" sortOrder="1" disabled="false"/>
+    </type>
+</config>
