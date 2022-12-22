@@ -15,8 +15,9 @@ class Save extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         protected \Magento\Framework\View\Result\PageFactory $pageFactory,
+        protected \Magento\Backend\Model\Session $adminSession,
         protected \Xclm2\Cafe\Model\CafeTableFactory $cafeTable,
-        protected \Magento\Backend\Model\Session $adminSession
+        protected \Xclm2\Cafe\Helper\Data $helper,
     )
     {
         parent::__construct($context);
@@ -29,12 +30,15 @@ class Save extends \Magento\Backend\App\Action
         if ($data) {
             try {
                 $entity_id = $this->getRequest()->getParam('entity_id');
-                
+                $tablecode = $this->getRequest()->getParam('table_code');
+                error_log($this->helper->hash($tablecode), 0, BP . '/var/log/tablecodenecrypt.log');
+                // var_dump($this->helper->hash($tablecode));
+                // die();
                 $cafeTable = $this->cafeTable->create()->load($entity_id);
                 $cafeTable->setData($data);
                 $cafeTable->save();
 
-                $this->messageManager->addSuccess(__('The data has been saved.'));
+                $this->messageManager->addSuccessMessage(__('The data has been saved.'));
                 $this->adminSession->setFormData(false);
                 if ($this->getRequest()->getParam('back')) {
                     if ($this->getRequest()->getParam('back') == 'add') {
@@ -45,11 +49,11 @@ class Save extends \Magento\Backend\App\Action
                 }
                 return $resultRedirect->setPath('*/*/index');
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\RuntimeException $e) {
-                $this->messageManager->addError($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addException($e, __('Something went wrong while saving the data.'));
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the data.'));
             }
             
             $this->_getSession()->setFormData($data);

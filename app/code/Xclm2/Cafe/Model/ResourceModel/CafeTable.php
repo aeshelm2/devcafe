@@ -1,13 +1,15 @@
 <?php
 namespace Xclm2\Cafe\Model\ResourceModel;
 
+use Magento\Framework\Model\AbstractModel;
 use Xclm2\Cafe\Api\TableInterface;
 
 class CafeTable extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 	
 	public function __construct(
-		\Magento\Framework\Model\ResourceModel\Db\Context $context
+		protected \Magento\Framework\Model\ResourceModel\Db\Context $context,
+		protected \Xclm2\Cafe\Helper\Data $helper,
 	)
 	{
 		parent::__construct($context);
@@ -61,5 +63,15 @@ class CafeTable extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
 		$result = $connection->fetchAll($query);
 		return $result;
+	}
+
+	protected function _beforeSave(AbstractModel $object)
+	{
+		$tableCode = $object->getTableCode();
+		if(!empty($table)) {
+			$object->setTableCode($this->helper->hash($tableCode));
+		}
+
+		return parent::_beforeSave($object);
 	}
 }
